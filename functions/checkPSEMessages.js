@@ -7,6 +7,8 @@ const elements = ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "M
     "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", 
     "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"]
 
+const subscript = ["₀","₁","₂","₃","₄","₅","₆","₇","₈","₉"]
+
 function isalpha(text){
     return text.length === 1 && text.match(/[a-z]/i);
 }
@@ -22,7 +24,7 @@ function isInTable(text){
 }
 
 function splitInWords(text){
-    var output = [""]
+   var output = [""]
     while (text != ""){
         //console.log(text)
         if (isalpha(text[0])){
@@ -75,7 +77,7 @@ function checkIfPossible(combs){
             a += 1
         }
         else{
-                a = 0
+             a = 0
             }
         if (a == 4){
             return false
@@ -90,11 +92,11 @@ function checkComb(combs,i){
     if ( !(i < length) ){
         return false
     }
-
+    
     if ( combs[i] == false){
         return false
     }
-
+    
     return !checkComb(combs,i+2)
 
 }
@@ -138,6 +140,69 @@ function makeCombinationOfElements(combs){
     return output
 }
 
+function float2int (value) {
+    return value | 0;
+}
+
+function calcSubscript(number){
+    var tempoutput = ""
+    var output = ""
+    while (number != 0){
+        var n = number % 10
+        tempoutput += subscript[n]
+        number = float2int(number/10)
+    }
+    
+    for (i = 0; i < tempoutput.length;i++){
+        output += tempoutput[tempoutput.length - i -1]
+    }
+    return output
+}
+
+function subscriptify(input){
+    var elements2 = []
+    while (input != ""){
+        if (input[0] == input[0].toUpperCase()){
+            elements2.push(input[0])
+            input = input.replace(input[0],"",1)
+        }
+
+        if (input == ""){
+            break
+        }
+
+        if (input[0] == input[0].toLowerCase()){
+            elements2[elements2.length-1] += input[0]
+            input = input.replace(input[0],"",1)
+        } 
+    }
+
+    elements2.push("!")
+    
+    var lastE = ""
+    var count = 1
+    var output = ""
+    
+    elements2.forEach(e => {
+        if (e == lastE){
+            count += 1
+        }
+        else{
+            if (count > 1){
+                output += calcSubscript(count)
+                }
+            output += e
+            lastE = e
+            count = 1
+        }
+    });
+
+    output = output.replace("!","",1)
+    return output
+}
+
+
+
 function periodify(input){
 
     var words = splitInWords(input)
@@ -153,7 +218,7 @@ function periodify(input){
                 combsInTable.push(isInTable(c))
             })
 
-            x = makeCombinationOfElements(combsInTable)
+            x = subscriptify(makeCombinationOfElements(combsInTable))
 
             if(x == false){
                 noOutput = true
