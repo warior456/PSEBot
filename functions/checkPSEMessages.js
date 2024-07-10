@@ -180,10 +180,10 @@ function checkPSEMessages(message){
     console.log(message.content.length)
     //if(message.content.length < 2) return
     console.log(message.content + "messagecontent")
-    const periodiFied = periodify(message.content.toLowerCase())
+    var periodiFied = periodify(message.content.toLowerCase())
     console.log(periodiFied + "perdiodified")
     if(!periodiFied) return
-    const answer = `Your message can be written with elements of the PSE: \n${periodiFied}`
+    var answer = `Your message can be written with elements of the PSE: \n${periodiFied}`
     Reply.send(message, answer)
 
 }
