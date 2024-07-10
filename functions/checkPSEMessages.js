@@ -90,18 +90,12 @@ function checkComb(combs,i){
     if ( !(i < length) ){
         return false
     }
-    
+
     if ( combs[i] == false){
         return false
     }
-    
-    if ( checkComb(combs,i+2) == false){
-        return true
-    }
-    
-    if (checkComb(combs,i+2) == true){
-        return false
-    }
+
+    return !checkComb(combs,i+2)
 
 }
 
