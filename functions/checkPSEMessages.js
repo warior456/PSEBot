@@ -23,25 +23,25 @@ function isInTable(text){
 
 function splitInWords(text){
     var output = [""]
-     while (text != ""){
-         //console.log(text)
-         if (isalpha(text[0])){
-             //console.log("true")
-             output[output.length-1] += text[0]
-             text = text.replace(text[0],"",1)
-         }
-         else{
-             output.push(text[0])
-             text = text.replace(text[0],"",1)
-             output.push("")
-         }
-     }
- 
-     output = output.filter(a => a !== "");
- 
-     return output
- 
- }
+    while (text != ""){
+        //console.log(text)
+        if (isalpha(text[0])){
+            //console.log("true")
+            output[output.length-1] += text[0]
+            text = text.replace(text[0],"",1)
+        }
+        else{
+            output.push(text[0])
+            text = text.replace(text[0],"",1)
+            output.push("")
+        }
+    }
+
+    output = output.filter(a => a !== "");
+
+    return output
+
+}
 
 function splitInCombinations(word){
     var output = []
@@ -75,7 +75,7 @@ function checkIfPossible(combs){
             a += 1
         }
         else{
-             a = 0
+                a = 0
             }
         if (a == 4){
             return false
@@ -165,7 +165,7 @@ function periodify(input){
         else{
             output += w
         }
-
+        
     });
     if (noOutput){
         return false
