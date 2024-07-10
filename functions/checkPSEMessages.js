@@ -177,7 +177,8 @@ function periodify(input){
 
 
 function checkPSEMessages(message){
-    if(message.content.length < 2) return
+    console.log(message.content.length)
+    //if(message.content.length < 2) return
     console.log(message.content + "messagecontent")
     const periodiFied = periodify(message.content.toLowerCase())
     console.log(periodiFied + "perdiodified")
