@@ -22,25 +22,26 @@ function isInTable(text){
 }
 
 function splitInWords(text){
-   var output = [""]
-    while (text != ""){
-        //console.log(text)
-        if (isalpha(text[0])){
-            //console.log("true")
-            output[output.length-1] += text[0]
-            text = text.replace(text[0],"",1)
-        }
-        else{
-            text = text.replace(text[0],"",1)
-            output.push("")
-        }
-    }
-
-    output = output.filter(a => a !== "");
-
-    return output
-
-}
+    var output = [""]
+     while (text != ""){
+         //console.log(text)
+         if (isalpha(text[0])){
+             //console.log("true")
+             output[output.length-1] += text[0]
+             text = text.replace(text[0],"",1)
+         }
+         else{
+             output.push(text[0])
+             text = text.replace(text[0],"",1)
+             output.push("")
+         }
+     }
+ 
+     output = output.filter(a => a !== "");
+ 
+     return output
+ 
+ }
 
 function splitInCombinations(word){
     var output = []
@@ -145,20 +146,25 @@ function periodify(input){
 
     var output = ""
     words.forEach(w => {
-        console.log(w)
-        var combs = splitInCombinations(w)
-        var combsInTable = []
-        combs.forEach(c =>{
-            combsInTable.push(isInTable(c))
-        })
+        //console.log(w)
+        if (isalpha(w[0])){
+            var combs = splitInCombinations(w)
+            var combsInTable = []
+            combs.forEach(c =>{
+                combsInTable.push(isInTable(c))
+            })
 
-        x = makeCombinationOfElements(combsInTable)
+            x = makeCombinationOfElements(combsInTable)
 
-        if(x == false){
-            noOutput = true
+            if(x == false){
+                noOutput = true
+            }
+
+            output += x
         }
-
-        output += x + " "
+        else{
+            output += w
+        }
 
     });
     if (noOutput){
