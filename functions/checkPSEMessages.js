@@ -9,6 +9,8 @@ const elements = ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "M
 
 const subscript = ["₀","₁","₂","₃","₄","₅","₆","₇","₈","₉"]
 
+var doSubscript = true
+
 function isalpha(text){
     return text.length === 1 && text.match(/[a-z]/i);
 }
@@ -201,9 +203,23 @@ function subscriptify(input){
     return output
 }
 
+function hasAlphabetElement(text){
+    var r = false
+    for (let i = 0; i < text.length; i++) {
+        c = text[i]
+        if (isalpha(c)){
+            r = true
+        }
+    };
+    return r
+}
+
+
 
 
 function periodify(input){
+    if (!hasAlphabetElement(input))
+        return false
 
     var words = splitInWords(input)
     var noOutput = false
@@ -218,10 +234,14 @@ function periodify(input){
                 combsInTable.push(isInTable(c))
             })
 
-            x = subscriptify(makeCombinationOfElements(combsInTable))
+            x = makeCombinationOfElements(combsInTable)
 
             if(x == false){
                 noOutput = true
+            }
+
+            if (doSubscript){
+                x = subscriptify(x)
             }
 
             output += x
