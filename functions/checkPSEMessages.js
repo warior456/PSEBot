@@ -121,6 +121,11 @@ function makeCombinationOfElements(combs){
             output += combs[index]
             index += 4
         }
+        else if (index < length && combs[index] != false && combs[index-1] == false){
+            //console.log(index,combs,combs[index],"elif")
+            output += combs[index]
+            index += 4
+        }
         else{
             //console.log(index-1,combs,combs[index-1],"else")
             if (combs[index-1] == false){
