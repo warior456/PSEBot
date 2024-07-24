@@ -1,4 +1,5 @@
 const Reply = require("../handlers/replyHandler");
+var prefix = process.env.PREFIX
 
 const elements = ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", 
     "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", 
@@ -11,9 +12,9 @@ const subscript = ["₀","₁","₂","₃","₄","₅","₆","₇","₈","₉"]
 
 var doSubscript = true
 
-var prefix = process.env.PREFIX;
-var commandNames =  ["element with",    "subscript"]
-var commands =      [getElementsWith,   toggleSubscript]
+
+var commandNames =  ["help",    "element with",    "subscript"]
+var commands =      [help,      getElementsWith,   toggleSubscript]
 
 function isalpha(text){
     return text.length === 1 && text.match(/[a-z]/i);
@@ -263,6 +264,15 @@ function periodify(input){
     }
 }
 
+//commands ----
+
+function help(input){
+    var output = `These are the commands:\n
+                    -!element with <letter>\n
+                    -!subscript <true/false>
+                    `
+    return output
+}
 
 function getElementsWith(input){
     var letter = input[0]
@@ -300,7 +310,7 @@ function toggleSubscript(input){
 
 
 }
-
+//----
 function main(input){
     var iscommand = false
 
