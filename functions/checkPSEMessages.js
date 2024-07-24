@@ -9,7 +9,7 @@ const elements = ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "M
 
 const subscript = ["₀","₁","₂","₃","₄","₅","₆","₇","₈","₉"]
 
-var v
+var doSubscript = true
 
 var prefix = process.env.PREFIX;
 var commandNames =  ["element with",    "subscript"]

@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 require('dotenv').config();
-require('ffmpeg-static');
 
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
