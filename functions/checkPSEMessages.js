@@ -9,7 +9,11 @@ const elements = ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "M
 
 const subscript = ["₀","₁","₂","₃","₄","₅","₆","₇","₈","₉"]
 
-var doSubscript = true
+var v
+
+var prefix = process.env.PREFIX;
+var commandNames =  ["element with",    "subscript"]
+var commands =      [getElementsWith,   toggleSubscript]
 
 function isalpha(text){
     return text.length === 1 && text.match(/[a-z]/i);
@@ -224,7 +228,7 @@ function periodify(input){
     var words = splitInWords(input)
     var noOutput = false
 
-    var output = ""
+    var output = "Your message can be written with elements of the PSE:\n"
     words.forEach(w => {
         //console.log(w)
         if (isalpha(w[0])){
@@ -260,15 +264,77 @@ function periodify(input){
 }
 
 
+function getElementsWith(input){
+    var letter = input[0]
+    var output = "These elements contain the letter \"" + letter + "\":\n"
+
+    var noneFound = true
+
+    for ([i, e] of elements.entries()){
+        if (e.toLowerCase().indexOf(letter) != -1){
+            output = output + ", " + e
+            noneFound = false
+        }
+    }
+    if (noneFound){
+        output = output + "No elements found :("
+    }
+    output = output.replace(", ","",1)
+    return output
+    
+
+}
+
+function toggleSubscript(input){
+    var activate = ["true","1","enable","on"]
+    var deactivate = ["false","0","disable","off"]
+
+    if (activate.indexOf(input) != -1){
+        doSubscript = true
+        return "Subscript activated"
+    }
+    if (deactivate.indexOf(input) != -1){
+        doSubscript = false
+        return "Subscript deactivated"
+    }
+
+
+}
+
+function main(input){
+    var iscommand = false
+
+    if (input.startsWith(prefix)){
+        for ([i, name] of commandNames.entries()){
+            if (input.startsWith(prefix + name)){
+                var l = name.length
+
+                iscommand = true
+                
+                command = commands[i]
+                input = input.replace(prefix + name + " ","",1)
+                return command(input)
+            }
+        }
+    }
+    if (!iscommand){
+        return periodify(input)
+    }
+}
+
+
+
 function checkPSEMessages(message){
     console.log(message.content.length)
     //if(message.content.length < 2) return
     console.log(message.content + "messagecontent")
-    var periodiFied = periodify(message.content.toLowerCase())
+
+    var periodiFied = main(message.content.toLowerCase())
+
     console.log(periodiFied + "perdiodified")
     if(!periodiFied) return
-    var answer = `Your message can be written with elements of the PSE: \n${periodiFied}`
-    Reply.send(message, answer)
+
+    Reply.send(message, periodiFied)
 
 }
 
